@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Application</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+<div id="chat">
+
+ <div id="message-wrapper"> 
+
+  <ul id="messages">
+    <li v-repeat="message: messages">{{ message }}</li>
+  </ul>
+
+
+  <form v-on="submit: send">
+   
+    <div class="form-group">
+      <input type="text" class="form-control" v-model="message" placeholder="Write a message...">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="pull-right btn btn-sm btn-primary">Chat</button>
+    </div>
+  </form>
+ </div>
+    
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.min.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.15/vue.min.js"></script>
+<script type="text/javascript">
+ 
+
+  var socket = io();
+
+  new Vue({
+    el: '#chat',
+
+    data: {
+      messages: [],
+      message: ''
+    },
+
+    ready: function() {
+      socket.on('chat.message', function(message) {
+        this.messages.push(message);
+      }.bind(this));
+    },
+
+    methods: {
+      send: function(evt) {
+        socket.emit('chat.message', this.message);
+
+        this.message = '';
+
+        evt.preventDefault();
+      }
+    }
+  });
+
+</script>
+</body>
+</html>

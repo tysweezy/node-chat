@@ -1,0 +1,22 @@
+
+li { list-style: none; } 
+
+#chat {
+    padding: 10px;
+    background: #333;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 20%;
+}
+
+#message-wrapper {
+    bottom: 0;
+    position: absolute;
+    margin: 0 auto 10px auto;
+    width: 91%;
+}
+
+
+#messages { color: #fff; }
